@@ -2,7 +2,6 @@ import sys
 import traceback
 from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout,
                              QPushButton, QTextEdit, QFileDialog, QLabel)
-# from PyQt5.QtCore import Qt # Убрали неиспользуемый импорт
 from docx import Document
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_LINE_SPACING
@@ -278,7 +277,6 @@ class DocFormatChecker(QWidget):
                 if para_display_header_shown_in_main_log:
                     QApplication.processEvents()
 
-            # --- ФОРМИРОВАНИЕ ИТОГОВОГО ОТЧЕТА с использованием таблиц ---
             self.results_text_edit.append(
                 "<hr><p style='margin-top:5px; margin-bottom:2px;'><b>--- ИТОГ ПРОВЕРКИ ---</b></p>")
             total_issues_found = len(document_level_errors) + len(structured_issues_report)
@@ -329,12 +327,10 @@ class DocFormatChecker(QWidget):
                             details_exist = any(lr_data['has_font_errors'] and lr_data['error_details'] for lr_data in
                                                 issue_data['logical_runs'])
                             if details_exist:
-                                # ИЗМЕНЕНО: Увеличен размер шрифта для заголовка деталей
                                 table_html += f"<tr><td style='padding-left: 25px;'><font size='+0'>Детали по фрагментам с ошибками:</font></td></tr>"
                                 for lr_data in issue_data['logical_runs']:
                                     if lr_data['has_font_errors'] and lr_data['error_details'] and lr_data[
                                         'fragment_number'] is not None:
-                                        # ИЗМЕНЕНО: Увеличен размер шрифта для самих деталей
                                         table_html += (
                                             f"<tr><td style='padding-left: 30px;'><font size='+0'>- Фрагмент ({lr_data['fragment_number']}): {self._escape_html('; '.join(lr_data['error_details']))}</font></td></tr>"
                                         )
